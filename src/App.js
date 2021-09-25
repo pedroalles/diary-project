@@ -7,7 +7,7 @@ import store from './redux/store';
 function App() {
   return (
     <Provider store={ store }>
-      home here
+      Solution 2 here
     </Provider>
   );
 }
