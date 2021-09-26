@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,14 +15,19 @@ const Table = styled.table`
 
   tbody {
     tr:nth-child(odd) {
-      background-color: #00ce6e;
+      background-color: #b1b1b1;
     }
     tr:nth-child(even) {
-      background-color: #00ce6e8b;
+      background-color: #999999;
     }
     tr {
       color: #161616;
-      transition: 0.5s;
+      transition: 0.6s;
+
+      td:nth-last-child(1) {
+        display: flex;
+        justify-content: space-evenly;
+      }
     }
     tr:hover {
       background-color: white;
@@ -73,6 +78,15 @@ const Input = styled.input`
   font-size: 1rem;
   padding: 1px 4px;
   text-align: ${props => props.center ? "center" : "justify"};
+  width: 100%;
+`;
+
+const Button = styled.button`
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: none;
+  color: ${props => props.save ? "#128826" : props.edit ? "#d14d00" : "#be4040"};
 `;
 
 const TaskTable = () => {
@@ -120,8 +134,8 @@ const TaskTable = () => {
       </thead>
 
       <tbody>
-        { tasks.map((task) => (
-          <tr>
+        { tasks.map((task, index) => (
+          <tr key={ index }>
             <TbodyCell>
               { task.isEditing ?
                 <Input
@@ -154,19 +168,19 @@ const TaskTable = () => {
             <TbodyCell center>
 
               { task.isEditing ?
-                <button onClick={ () => handleSave(task) }>save</button>
+                <Button save onClick={ () => handleSave(task) }><i className="fas fa-save fa-2x"></i></Button>
                 :
-                <button onClick={ () => handleEdit(task) }>edit</button>
+                <Button edit onClick={ () => handleEdit(task) }><i className="fas fa-pencil-alt fa-2x"></i></Button>
               }
 
-              <button onClick={ () => dispatch(deleteTask(task.id)) }>del</button>
+              <Button delete onClick={ () => dispatch(deleteTask(task.id)) }><i className="fas fa-trash fa-2x"></i></Button>
 
             </TbodyCell>
           </tr>
         )) }
       </tbody>
 
-    </Table>
+    </Table >
   );
 };
 

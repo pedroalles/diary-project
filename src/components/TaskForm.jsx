@@ -24,6 +24,15 @@ const Form = styled.form`
   }
 `;
 
+const Button = styled.button`
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: none;
+  vertical-align: middle;
+  color: #6565d6;
+`;
+
 const TaskForm = () => {
   const [task, setTask] = useState({ title: '', description: '' });
 
@@ -57,7 +66,7 @@ const TaskForm = () => {
         onChange={ handleChange }
         required
       />
-      <button type="submit">+</button>
+      <Button type="submit"><i className="fas fa-plus-circle fa-lg"></i></Button>
     </Form>
   );
 };
