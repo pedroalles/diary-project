@@ -1,6 +1,8 @@
 import {
   ADD_TASK,
   DELETE_TASK,
+  TOGGLE_EDIT_TASK,
+  UPDATE_TASK,
   SET_FILTER,
 } from '../actions';
 
@@ -22,6 +24,7 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
     case ADD_TASK:
       const { title, description } = action.payload;
       return {
+        ...state,
         tasks: [
           ...state.tasks,
           {
@@ -35,10 +38,31 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
           }
         ]
       };
+
     case DELETE_TASK:
       return {
         ...state,
         tasks: state.tasks.filter(task => task.id !== action.payload)
+      };
+
+    case TOGGLE_EDIT_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === action.payload ?
+            { ...task, isEditing: !task.isEditing } : { ...task, isEditing: false })
+      };
+
+    case UPDATE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map(task => task.id === action.payload.id ?
+          {
+            ...task,
+            title: action.payload.title,
+            description: action.payload.description
+          } : { ...task }
+        )
       };
 
     case SET_FILTER:
