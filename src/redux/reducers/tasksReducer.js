@@ -4,6 +4,7 @@ import {
   TOGGLE_EDIT_TASK,
   UPDATE_TASK,
   SET_FILTER,
+  TOGGLE_UPDATES_TASK,
 } from '../actions';
 
 import { generateID } from '../../helpers/idGenerator';
@@ -63,6 +64,14 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
             description: action.payload.description
           } : { ...task }
         )
+      };
+
+    case TOGGLE_UPDATES_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === action.payload ?
+            { ...task, isHidden: !task.isHidden } : { ...task })
       };
 
     case SET_FILTER:

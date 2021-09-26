@@ -9,7 +9,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   margin: 6px auto;
-  width: 80%;
+  width: 90%;
 `;
 
 const Header = () => {

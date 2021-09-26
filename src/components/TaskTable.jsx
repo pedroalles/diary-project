@@ -2,84 +2,91 @@ import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { deleteTask, toggleEditTask, updateTask } from '../redux/actions';
+import { deleteTask, toggleEditTask, updateTask, toggleUpdateTask } from '../redux/actions';
 
 import styled from 'styled-components';
 
-const Table = styled.table`
-  width: 80%;
+const Table = styled.div`
+  width: 90%;
   margin: auto;
-  /* border-collapse: collapse; */
-  border-collapse: separate;
-  border-spacing: 0px 0px;
-
-  tbody {
-    tr:nth-child(odd) {
-      background-color: #b1b1b1;
-    }
-    tr:nth-child(even) {
-      background-color: #999999;
-    }
-    tr {
-      color: #161616;
-      transition: 0.4s;
-
-      td:nth-child(5) {
-        display: flex;
-        justify-content: space-evenly;
-      }
-      td{
-        transition: inherit;
-      }
-    }
-    tr:hover {
-      --td-boredr-px : 5px;
-      /* background-color: white; */
-      background-color: #2b2b2b;
-      color: #161616;
-      /* height: 42px; */
-
-      td:nth-child(1) {
-        height: 45px;
-        border-top-left-radius: var(--td-boredr-px);
-        border-bottom-left-radius: var(--td-boredr-px);
-        border-left: 1px solid #161616;
-      }
-
-      td:nth-last-child(1) {
-        height: 45px;
-        border-top-right-radius: var(--td-boredr-px);
-        border-bottom-right-radius: var(--td-boredr-px);
-        border-right: 1px solid #161616;
-      }
-
-      td {
-        background-color: white;
-        /* padding: 5px; */
-        font-size: 1.2rem;
-        /* border-top: 1px solid #161616; */
-        border-bottom: 1px solid #161616;
-      }
-    }
-  }
+  display: flex;
+  flex-direction: column;
 `;
 
-const TheadRow = styled.tr`
+const TableHeader = styled.div`
+  display: flex;
   background-color: #161616 ;
   color: white;
 `;
 
-const TheadCell = styled.td`
+const TableHeaderCell = styled.div`
   font-size: 1.2rem;
   padding: 4px;
   text-align: center;
-  width: ${props => props.title ? "20%" : props.description ? "30%" : props.actions ? "auto" : "20%"};
+  width: ${props => props.title ? "20%" : props.description ? "30%" : props.actions ? "10%" : "20%"};
 `;
 
-const TbodyCell = styled.td`
+const TableBody = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  .row:nth-child(odd) {
+    background-color: #b9b9b9;
+  }
+  .row:nth-child(even) {
+    background-color: #8a8a8a;
+  }
+
+  .row:hover {
+    --row-border-rad-px : 5px;
+    --row-border-px : 1px;
+    background-color: white;
+    color: black;
+    border-bottom: var(--row-border-px) solid #161616;
+    border-left: var(--row-border-px) solid #161616;
+    border-right: var(--row-border-px) solid #161616;
+    border-top-left-radius: var(--row-border-rad-px);
+    border-bottom-left-radius: var(--row-border-rad-px);
+    border-top-right-radius: var(--row-border-rad-px);
+    border-bottom-right-radius: var(--row-border-rad-px);
+  }
+
+  .content:hover {
+    height: 50px;
+  }
+
+`;
+
+const TableRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.5s;
+`;
+
+const TableRowContent = styled.div`
+  display: flex;
+  align-items: center;
+  height: 40px;
+  transition: inherit;
+
+  div:nth-child(5) {
+    display: flex;
+    justify-content: space-evenly;
+  }
+`;
+
+const TableRowUpdates = styled.div`
+  display: flex;
+  background-color: #0d9b38;
+`;
+
+const TableRowCell = styled.div`
   font-size: 1.2rem;
   padding: 4px;
+  vertical-align: middle;
   text-align: ${props => props.center ? "center" : "justify"};
+  width: ${props => props.title ? "20%" : props.description ? "30%" : props.actions ? "10%" : "20%"};
 `;
 
 const Input = styled.input`
@@ -90,8 +97,6 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  /* width: 30px; */
-  /* height: 30px; */
   border: none;
   background: none;
   color: ${props => props.save ? "#128826" : props.edit ? "#d14d00" : "#be4040"};
@@ -131,65 +136,102 @@ const TaskTable = () => {
   return (
     <Table>
 
-      <thead>
-        <TheadRow>
-          <TheadCell>Title</TheadCell>
-          <TheadCell description>Description</TheadCell>
-          <TheadCell>Created At</TheadCell>
-          <TheadCell>Updated At</TheadCell>
-          <TheadCell actions>Actions</TheadCell>
-        </TheadRow>
-      </thead>
+      <TableHeader>
+        <TableHeaderCell title>Title</TableHeaderCell>
+        <TableHeaderCell description>Description</TableHeaderCell>
+        <TableHeaderCell>Created At</TableHeaderCell>
+        <TableHeaderCell>Updated At</TableHeaderCell>
+        <TableHeaderCell actions>Actions</TableHeaderCell>
+      </TableHeader>
 
-      <tbody>
+      <TableBody>
+
         { tasks.map((task, index) => (
-          <tr key={ index }>
+          <TableRow className="row" key={ index }>
 
-            <TbodyCell>
-              { task.isEditing ?
-                <Input
-                  type="text"
-                  id="title"
-                  value={ editing.title }
-                  onChange={ handleChange }
-                  placeholder="Update your title"
-                />
-                :
-                task.title
-              }
-            </TbodyCell>
+            <TableRowContent className="content">
 
-            <TbodyCell>
-              { task.isEditing ?
-                <Input
-                  type="text"
-                  id="description"
-                  value={ editing.description }
-                  onChange={ handleChange }
-                  placeholder="Update your description"
-                />
-                :
-                task.description
-              }
-            </TbodyCell>
+              <TableRowCell
+                title
+                onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
+              >
+                { task.isEditing ?
+                  <Input
+                    type="text"
+                    id="title"
+                    value={ editing.title }
+                    onChange={ handleChange }
+                    placeholder="Update your title"
+                  />
+                  :
+                  task.title
+                }
+              </TableRowCell>
 
-            <TbodyCell center>{ task.createdAt }</TbodyCell>
-            <TbodyCell center>{ !task.updates.length ? 'No updates' : task.updates[0].updatedAt }</TbodyCell>
+              <TableRowCell
+                description
+                onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
+              >
+                { task.isEditing ?
+                  <Input
+                    type="text"
+                    id="description"
+                    value={ editing.description }
+                    onChange={ handleChange }
+                    placeholder="Update your description"
+                  />
+                  :
+                  task.description
+                }
+              </TableRowCell>
 
-            <TbodyCell center>
+              <TableRowCell
+                center
+                onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
+              >
+                { task.createdAt }
+              </TableRowCell>
 
-              { task.isEditing ?
-                <Button save onClick={ () => handleSave(task) }><i className="fas fa-save fa-2x"></i></Button>
-                :
-                <Button edit onClick={ () => handleEdit(task) }><i className="fas fa-pencil-alt fa-2x"></i></Button>
-              }
+              <TableRowCell
+                center
+                onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
+              >
+                { !task.updates.length ? 'No updates' : task.updates[0].updatedAt }
+              </TableRowCell>
 
-              <Button delete onClick={ () => dispatch(deleteTask(task.id)) }><i className="fas fa-trash fa-2x"></i></Button>
+              <TableRowCell center actions>
+                { task.isEditing ?
+                  <Button save onClick={ () => handleSave(task) }>
+                    <i className="fas fa-save fa-2x"></i>
+                  </Button>
+                  :
+                  <Button edit onClick={ () => handleEdit(task) }>
+                    <i className="fas fa-pencil-alt fa-2x"></i>
+                  </Button>
+                }
+                <Button delete onClick={ () => dispatch(deleteTask(task.id)) }>
+                  <i className="fas fa-trash fa-2x"></i>
+                </Button>
+              </TableRowCell>
 
-            </TbodyCell>
-          </tr>
+            </TableRowContent>
+
+            <TableRowUpdates>
+              <div hidden={ task.isHidden }>
+                <ul style={ { 'list-style': 'none' } }>
+                  <li>asdasdas</li>
+                  <li>asdasdas</li>
+                  <li>asdasdas</li>
+                  <li>asdasdas</li>
+                  <li>asdasdas</li>
+                </ul>
+              </div>
+            </TableRowUpdates>
+
+          </TableRow>
         )) }
-      </tbody>
+
+      </TableBody>
 
     </Table >
   );
