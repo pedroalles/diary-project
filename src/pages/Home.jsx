@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { TaskForm, TaskTable } from '../components';
+import { Header, TaskTable } from '../components';
 
 const Home = () => {
   return (
     <div>
-      <TaskForm />
+      <Header />
       <TaskTable />
     </div>
   );

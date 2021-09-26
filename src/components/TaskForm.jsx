@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
+
 import { useDispatch } from 'react-redux';
 
 import styled from 'styled-components';
 
-import { addTodo } from '../redux/actions';
+import { addTask } from '../redux/actions';
 
 const Form = styled.form`
-  width: 80%;
-  margin: auto;
-  input {
+  /* width: 80%; */
+  /* margin: auto; */
+  input, button {
+    font-size: 1.2rem;
+    margin-left: 2px;
     padding: 4px;
+  }
+  input:nth-child(1) {
+    /* margin-right: 2px; */
+    /* width: 35%; */
+  }
+  input:nth-child(2) {
+    /* margin-right: 2px; */
+    /* width: 55%; */
   }
 `;
 
@@ -20,7 +31,7 @@ const TaskForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTodo(task));
+    dispatch(addTask(task));
     setTask({ title: '', description: '' });
   };
 
@@ -36,6 +47,7 @@ const TaskForm = () => {
         value={ task.title }
         placeholder="Title"
         onChange={ handleChange }
+        required
       />
       <input
         type="text"
@@ -43,6 +55,7 @@ const TaskForm = () => {
         value={ task.description }
         placeholder="Description"
         onChange={ handleChange }
+        required
       />
       <button type="submit">+</button>
     </Form>

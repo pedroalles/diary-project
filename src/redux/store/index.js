@@ -12,6 +12,6 @@ import { loadFromLocalStorage, saveToLocalStorage } from '../../helpers/localSto
 // const store = createStore(rootReducer, loadFromLocalStorage(), extension);
 const store = createStore(rootReducer, loadFromLocalStorage(), composeWithDevTools());
 
-store.subscribe(() => saveToLocalStorage(store.getState()));
+store.subscribe(() => saveToLocalStorage({ tasksReducer: { ...store.getState().tasksReducer, filter: '' } }));
 
 export default store;

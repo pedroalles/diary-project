@@ -1,5 +1,6 @@
 import {
-  ADD_TODO,
+  ADD_TASK,
+  DELETE_TASK,
   SET_FILTER,
 } from '../actions';
 
@@ -10,19 +11,19 @@ import { generateDate } from '../../helpers/dateGenerator';
 // { id: generateID(), title: 'tarefa 1', description: 'descrição 1', createdAt: '123', updates: []; }
 
 const INITIAL_STATE = {
-  todos: [],
+  tasks: [],
   filter: '',
 };
 
-const todoReducer = (state = INITIAL_STATE, action) => {
+const tasksReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
 
-    case ADD_TODO:
+    case ADD_TASK:
       const { title, description } = action.payload;
       return {
-        todos: [
-          ...state.todos,
+        tasks: [
+          ...state.tasks,
           {
             id: generateID(),
             title: title,
@@ -33,6 +34,11 @@ const todoReducer = (state = INITIAL_STATE, action) => {
             updates: [],
           }
         ]
+      };
+    case DELETE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.filter(task => task.id !== action.payload)
       };
 
     case SET_FILTER:
@@ -46,4 +52,4 @@ const todoReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default todoReducer;
+export default tasksReducer;
