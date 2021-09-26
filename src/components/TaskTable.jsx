@@ -22,35 +22,43 @@ const Table = styled.table`
     }
     tr {
       color: #161616;
-      transition: 0.6s;
+      transition: 0.4s;
 
-      td:nth-last-child(1) {
+      td:nth-child(5) {
         display: flex;
         justify-content: space-evenly;
       }
+      td{
+        transition: inherit;
+      }
     }
     tr:hover {
-      background-color: white;
+      --td-boredr-px : 5px;
+      /* background-color: white; */
+      background-color: #2b2b2b;
       color: #161616;
-      height: 42px;
+      /* height: 42px; */
 
       td:nth-child(1) {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-        border-left: 2px solid #161616;
+        height: 45px;
+        border-top-left-radius: var(--td-boredr-px);
+        border-bottom-left-radius: var(--td-boredr-px);
+        border-left: 1px solid #161616;
       }
 
       td:nth-last-child(1) {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-right: 2px solid #161616;
+        height: 45px;
+        border-top-right-radius: var(--td-boredr-px);
+        border-bottom-right-radius: var(--td-boredr-px);
+        border-right: 1px solid #161616;
       }
 
       td {
-        padding: 6px;
+        background-color: white;
+        /* padding: 5px; */
         font-size: 1.2rem;
-        border-top: 2px solid #161616;
-        border-bottom: 2px solid #161616;
+        /* border-top: 1px solid #161616; */
+        border-bottom: 1px solid #161616;
       }
     }
   }
@@ -82,8 +90,8 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 30px;
-  height: 30px;
+  /* width: 30px; */
+  /* height: 30px; */
   border: none;
   background: none;
   color: ${props => props.save ? "#128826" : props.edit ? "#d14d00" : "#be4040"};
@@ -136,6 +144,7 @@ const TaskTable = () => {
       <tbody>
         { tasks.map((task, index) => (
           <tr key={ index }>
+
             <TbodyCell>
               { task.isEditing ?
                 <Input
@@ -149,6 +158,7 @@ const TaskTable = () => {
                 task.title
               }
             </TbodyCell>
+
             <TbodyCell>
               { task.isEditing ?
                 <Input
@@ -162,6 +172,7 @@ const TaskTable = () => {
                 task.description
               }
             </TbodyCell>
+
             <TbodyCell center>{ task.createdAt }</TbodyCell>
             <TbodyCell center>{ !task.updates.length ? 'No updates' : task.updates[0].updatedAt }</TbodyCell>
 
