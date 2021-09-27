@@ -9,6 +9,7 @@ import { loadFromLocalStorage, saveToLocalStorage } from '../../helpers/localSto
 // const extension = window.devToolsExtension() || ((f) => f);
 // const extension = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
+
 // const store = createStore(rootReducer, loadFromLocalStorage(), extension);
 const store = createStore(rootReducer, loadFromLocalStorage(), composeWithDevTools());
 
