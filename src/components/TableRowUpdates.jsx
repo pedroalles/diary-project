@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 const TableUpdates = styled.div`
   font-size: 1.2rem;
-  width: 50%;
+  width: 65%;
   margin: auto;
 
   .container {
