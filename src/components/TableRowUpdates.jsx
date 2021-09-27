@@ -29,8 +29,10 @@ const TableUpdates = styled.div`
 
   p {
     width: 60%;
-    margin: auto;
+    margin: 10px auto;
     text-align: center;
+    color: black;
+    font-size: 1.2rem;
   }
 
 `;
@@ -41,7 +43,7 @@ const UpdatesRow = styled.div`
   align-items: center;
 
   div {
-    padding: 4px;
+    padding: 5px;
   }
 
   div:nth-child(1) {
@@ -83,13 +85,6 @@ const Button = styled.button`
   color: ${props => props.del ? "#be4040" : "#6565d6"};
 `;
 
-// const Input = styled.input`
-//   /* font-size: 1.2rem;
-//   padding: 4px;
-//   width: 300px;
-//   margin: 5px 5px 5px 0px; */
-// `;
-
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
@@ -103,9 +98,6 @@ const Header = styled.header`
   }
 
   input:nth-child(2) {
-    /* font-size: 1.2rem; */
-    /* padding: 4px; */
-    /* width: 300px; */
     margin: 5px 0px 5px 0px;
   }
 `;

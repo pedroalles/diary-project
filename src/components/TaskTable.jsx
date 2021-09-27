@@ -15,6 +15,14 @@ const Table = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
+
+  p {
+    color:white;
+    text-align: center;
+    margin-top: 80px;
+    font-size: 2rem;
+    /* vertical-align: middle; */
+  }
 `;
 
 const TableHeader = styled.div`
@@ -133,15 +141,18 @@ const TaskTable = () => {
   };
 
   return (
-    <Table>
 
-      <TableHeader>
-        <TableHeaderCell title>Title</TableHeaderCell>
-        <TableHeaderCell description>Description</TableHeaderCell>
-        <TableHeaderCell>Created At</TableHeaderCell>
-        <TableHeaderCell>Updated At</TableHeaderCell>
-        <TableHeaderCell actions>Actions</TableHeaderCell>
-      </TableHeader>
+    <Table>
+      { !tasks.length ?
+        <p>No tasks</p> :
+        <TableHeader>
+          <TableHeaderCell title>Title</TableHeaderCell>
+          <TableHeaderCell description>Description</TableHeaderCell>
+          <TableHeaderCell>Created At</TableHeaderCell>
+          <TableHeaderCell>Updated At</TableHeaderCell>
+          <TableHeaderCell actions>Actions</TableHeaderCell>
+        </TableHeader>
+      }
 
       <TableBody>
 
