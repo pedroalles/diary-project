@@ -27,12 +27,12 @@ const TableUpdates = styled.div`
     background-color: #919191;
   }
 
-  p {
+  .noupdates {
     width: 60%;
-    margin: 10px auto;
     text-align: center;
     color: black;
     font-size: 1.2rem;
+    margin: 10px auto;
   }
 
 `;
@@ -155,7 +155,7 @@ const TableRowUpdates = ({ task }) => {
 
         </Header>
 
-        { !task.updates.length ? <p>No updates</p> :
+        { !task.updates.length ? <p className="noupdates">No updates</p> :
 
           <div >
 
