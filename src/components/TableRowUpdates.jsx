@@ -83,12 +83,12 @@ const Button = styled.button`
   color: ${props => props.del ? "#be4040" : "#6565d6"};
 `;
 
-const Input = styled.input`
-  /* font-size: 1.2rem;
-  padding: 4px;
-  width: 300px;
-  margin: 5px 5px 5px 0px; */
-`;
+// const Input = styled.input`
+//   /* font-size: 1.2rem;
+//   padding: 4px;
+//   width: 300px;
+//   margin: 5px 5px 5px 0px; */
+// `;
 
 const Header = styled.header`
   display: flex;
