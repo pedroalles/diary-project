@@ -5,6 +5,8 @@ import {
   UPDATE_TASK,
   SET_FILTER,
   TOGGLE_UPDATES_TASK,
+  ADD_UPDATE,
+  DELETE_UPDATE,
 } from '../actions';
 
 import { generateID } from '../../helpers/idGenerator';
@@ -72,6 +74,31 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
         tasks: state.tasks.map(task =>
           task.id === action.payload ?
             { ...task, isHidden: !task.isHidden } : { ...task })
+      };
+
+    case ADD_UPDATE:
+      console.log(action.payload);
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === action.payload.id ?
+            {
+              ...task,
+              updates: [...task.updates, {
+                id: generateID(),
+                description: action.payload.description,
+                createdAt: generateDate()
+              }]
+            } : { ...task })
+      };
+
+    case DELETE_UPDATE:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => task.id === action.payload.idTask ? {
+          ...task,
+          updates: task.updates.filter((update) => update.id !== action.payload.idUpdate)
+        } : { ...task })
       };
 
     case SET_FILTER:

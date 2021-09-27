@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-
 import { deleteTask, toggleEditTask, updateTask, toggleUpdateTask } from '../redux/actions';
+
+import TableRowCellTitle from './TableRowCellTitle';
+import TableRowCellDescription from './TableRowCellDescription';
+import TableRowCellActions from './TableRowCellActions';
+import TableRowUpdates from './TableRowUpdates';
 
 import styled from 'styled-components';
 
@@ -31,10 +35,10 @@ const TableBody = styled.div`
   flex-direction: column;
 
   .row:nth-child(odd) {
-    background-color: #b9b9b9;
+    background-color: #e9e9e9;
   }
   .row:nth-child(even) {
-    background-color: #8a8a8a;
+    background-color: #dddddd;
   }
 
   .row:hover {
@@ -76,27 +80,22 @@ const TableRowContent = styled.div`
   }
 `;
 
-const TableRowUpdates = styled.div`
-  display: flex;
-  background-color: #0d9b38;
-`;
-
-const TableRowCell = styled.div`
+export const TableRowCell = styled.div`
   font-size: 1.2rem;
-  padding: 4px;
+  padding: 5px;
   vertical-align: middle;
   text-align: ${props => props.center ? "center" : "justify"};
   width: ${props => props.title ? "20%" : props.description ? "30%" : props.actions ? "10%" : "20%"};
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   font-size: 1rem;
   padding: 1px 4px;
   text-align: ${props => props.center ? "center" : "justify"};
   width: 100%;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   border: none;
   background: none;
   color: ${props => props.save ? "#128826" : props.edit ? "#d14d00" : "#be4040"};
@@ -150,83 +149,41 @@ const TaskTable = () => {
           <TableRow className="row" key={ index }>
 
             <TableRowContent className="content">
-
-              <TableRowCell
-                title
+              <TableRowCellTitle
+                // title
                 onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
-              >
-                { task.isEditing ?
-                  <Input
-                    type="text"
-                    id="title"
-                    value={ editing.title }
-                    onChange={ handleChange }
-                    placeholder="Update your title"
-                  />
-                  :
-                  task.title
-                }
-              </TableRowCell>
-
-              <TableRowCell
-                description
+                editing={ editing }
+                task={ task }
+                handleChange={ handleChange }
+              />
+              <TableRowCellDescription
+                // description
                 onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
-              >
-                { task.isEditing ?
-                  <Input
-                    type="text"
-                    id="description"
-                    value={ editing.description }
-                    onChange={ handleChange }
-                    placeholder="Update your description"
-                  />
-                  :
-                  task.description
-                }
-              </TableRowCell>
-
+                editing={ editing }
+                task={ task }
+                handleChange={ handleChange }
+              />
               <TableRowCell
                 center
                 onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
               >
                 { task.createdAt }
               </TableRowCell>
-
               <TableRowCell
                 center
                 onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
               >
-                { !task.updates.length ? 'No updates' : task.updates[0].updatedAt }
+                { !task.updates.length ? 'No updates' : task.updates[task.updates.length - 1].createdAt }
               </TableRowCell>
-
-              <TableRowCell center actions>
-                { task.isEditing ?
-                  <Button save onClick={ () => handleSave(task) }>
-                    <i className="fas fa-save fa-2x"></i>
-                  </Button>
-                  :
-                  <Button edit onClick={ () => handleEdit(task) }>
-                    <i className="fas fa-pencil-alt fa-2x"></i>
-                  </Button>
-                }
-                <Button delete onClick={ () => dispatch(deleteTask(task.id)) }>
-                  <i className="fas fa-trash fa-2x"></i>
-                </Button>
-              </TableRowCell>
-
+              <TableRowCellActions
+                task={ task }
+                save={ () => handleSave(task) }
+                edit={ () => handleEdit(task) }
+                del={ () => dispatch(deleteTask(task.id)) }
+              />
             </TableRowContent>
 
-            <TableRowUpdates>
-              <div hidden={ task.isHidden }>
-                <ul style={ { 'list-style': 'none' } }>
-                  <li>asdasdas</li>
-                  <li>asdasdas</li>
-                  <li>asdasdas</li>
-                  <li>asdasdas</li>
-                  <li>asdasdas</li>
-                </ul>
-              </div>
-            </TableRowUpdates>
+            <TableRowUpdates task={ task } />
 
           </TableRow>
         )) }

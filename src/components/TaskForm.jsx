@@ -66,7 +66,9 @@ const TaskForm = () => {
         onChange={ handleChange }
         required
       />
-      <Button type="submit"><i className="fas fa-plus-circle fa-lg"></i></Button>
+      <Button type="submit">
+        <i className="fas fa-plus-circle fa-lg"></i>
+      </Button>
     </Form>
   );
 };

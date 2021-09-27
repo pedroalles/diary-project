@@ -4,6 +4,8 @@ export const DELETE_TASK = 'DELETE_TASK';
 export const TOGGLE_EDIT_TASK = 'TOGGLE_EDIT_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const TOGGLE_UPDATES_TASK = 'TOGGLE_UPDATES_TASK';
+export const ADD_UPDATE = 'ADD_UPDATE';
+export const DELETE_UPDATE = 'DELETE_UPDATE';
 
 export const addTask = (task) => ({
   type: ADD_TASK,
@@ -33,4 +35,14 @@ export const updateTask = (task) => ({
 export const toggleUpdateTask = (id) => ({
   type: TOGGLE_UPDATES_TASK,
   payload: id,
+});
+
+export const addUpdate = ({ id, description }) => ({
+  type: ADD_UPDATE,
+  payload: { id, description },
+});
+
+export const deleteUpdate = ({ idTask, idUpdate }) => ({
+  type: DELETE_UPDATE,
+  payload: { idTask, idUpdate },
 });
