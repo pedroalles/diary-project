@@ -105,7 +105,7 @@ const TaskTable = () => {
   const [editing, setEditing] = useState({ id: '', title: '', description: '' });
   let tasks = useSelector(state => state.tasksReducer.tasks);
 
-  const filter = useSelector(state => state.tasksReducer.filter);
+  const filter = useSelector(state => state.tasksReducer.filter.task);
   const dispatch = useDispatch();
 
   if (filter) {

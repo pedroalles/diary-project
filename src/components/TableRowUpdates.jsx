@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUpdate, deleteUpdate } from '../redux/actions';
+
+import { SearchBar } from '.';
 
 import styled from 'styled-components';
 
@@ -29,12 +31,6 @@ const TableUpdates = styled.div`
     width: 60%;
     margin: auto;
     text-align: center;
-  }
-
-  form {
-    width: 60%;
-    margin: auto;
-    vertical-align: middle;
   }
 
 `;
@@ -88,16 +84,49 @@ const Button = styled.button`
 `;
 
 const Input = styled.input`
-  font-size: 1.1rem;
-  padding: 2px;
+  /* font-size: 1.2rem;
+  padding: 4px;
   width: 300px;
-  margin: 5px 5px 5px 0px;
+  margin: 5px 5px 5px 0px; */
+`;
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  /* height: 200px; */
+
+  input:nth-child(1) {
+    font-size: 1.2rem;
+    padding: 4px;
+    width: 300px;
+    margin: 5px 5px 5px 0px;
+  }
+
+  input:nth-child(2) {
+    /* font-size: 1.2rem; */
+    /* padding: 4px; */
+    /* width: 300px; */
+    margin: 5px 0px 5px 0px;
+  }
 `;
 
 const TableRowUpdates = ({ task }) => {
 
   const dispatch = useDispatch();
   const [newUpdate, setNewUpdate] = useState({ id: '', description: '' });
+
+  const filter = useSelector(state => state.tasksReducer.filter.update);
+
+  let updates = task.updates;
+
+  if (filter) {
+    const lowFilter = filter.toLowerCase();
+    updates = updates
+      .filter(({ description, createdAt }) =>
+        description.toLowerCase().includes(lowFilter) ||
+        createdAt.toLowerCase().includes(lowFilter));
+  }
+
 
   const handleChange = ({ target: { name, value } }) => {
     setNewUpdate({ id: task.id, [name]: value });
@@ -114,20 +143,25 @@ const TableRowUpdates = ({ task }) => {
 
       <div className="container" hidden={ task.isHidden }>
 
-        <form onSubmit={ handleSubmit }>
-          <Input
-            type="text"
-            name="description"
-            value={ newUpdate.description }
-            onChange={ handleChange }
-            placeholder="Update Description"
-          />
-          <Button
-            type="submit"
-          >
-            <i className="fas fa-plus-circle fa-lg"></i>
-          </Button>
-        </form>
+        <Header>
+          <form onSubmit={ handleSubmit }>
+            <input
+              type="text"
+              name="description"
+              value={ newUpdate.description }
+              onChange={ handleChange }
+              placeholder="Update Description"
+            />
+            <Button
+              type="submit"
+            >
+              <i className="fas fa-plus-circle fa-lg"></i>
+            </Button>
+          </form>
+
+          <SearchBar mode="update" />
+
+        </Header>
 
         { !task.updates.length ? <p>No updates</p> :
 
@@ -145,7 +179,7 @@ const TableRowUpdates = ({ task }) => {
               </div>
             </UpdatesHeader>
 
-            { task.updates.map((update) => (
+            { updates.map((update) => (
 
               <UpdatesRow className="row" key={ update.id }>
                 <div>

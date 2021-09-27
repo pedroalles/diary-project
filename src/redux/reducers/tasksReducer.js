@@ -17,7 +17,7 @@ import { generateDate } from '../../helpers/dateGenerator';
 
 const INITIAL_STATE = {
   tasks: [],
-  filter: '',
+  filter: { task: '', update: '' },
 };
 
 const tasksReducer = (state = INITIAL_STATE, action) => {
@@ -71,9 +71,10 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
     case TOGGLE_UPDATES_TASK:
       return {
         ...state,
+        filter: { ...state.filter, update: '' },
         tasks: state.tasks.map(task =>
           task.id === action.payload ?
-            { ...task, isHidden: !task.isHidden } : { ...task })
+            { ...task, isHidden: !task.isHidden } : { ...task, isHidden: true })
       };
 
     case ADD_UPDATE:
@@ -104,7 +105,7 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
     case SET_FILTER:
       return {
         ...state,
-        filter: action.payload
+        filter: { ...state.filter, [action.payload.mode]: action.payload.filter }
       };
 
     default:

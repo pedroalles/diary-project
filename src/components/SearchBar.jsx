@@ -6,25 +6,26 @@ import styled from 'styled-components';
 
 import { setFilter } from '../redux/actions';
 
-const Input = styled.input`
+const InputSearch = styled.input`
   margin-right: 2px;
   font-size: 1.2rem;
   padding: 4px;
   width: 200px;
 `;
 
-const SearchBar = () => {
+const SearchBar = ({ mode }) => {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.tasksReducer.filter);
   const handleChange = ({ target: { value } }) => {
-    dispatch(setFilter(value));
+    dispatch(setFilter({ mode: mode, filter: value }));
   };
 
   return (
-    <Input
+    <InputSearch
+      mode={ mode }
       type="text"
       placeholder="Search"
-      value={ filter }
+      value={ filter[mode] }
       onChange={ handleChange }
     />
   );

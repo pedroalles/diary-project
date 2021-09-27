@@ -17,9 +17,9 @@ export const deleteTask = (id) => ({
   payload: id,
 });
 
-export const setFilter = (filter) => ({
+export const setFilter = ({ mode, filter }) => ({
   type: SET_FILTER,
-  payload: filter,
+  payload: { mode, filter },
 });
 
 export const toggleEditTask = (id) => ({

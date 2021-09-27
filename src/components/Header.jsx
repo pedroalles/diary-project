@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <TaskForm />
-      <SearchBar />
+      <SearchBar mode="task" />
     </StyledHeader>
   );
 };
