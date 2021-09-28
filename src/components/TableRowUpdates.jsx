@@ -12,22 +12,36 @@ import CellDescription from './CellDescription';
 
 const TableUpdates = styled.div`
   font-size: 1.2rem;
-  width: 70%;
+  width: 100%;
   margin: auto;
+  /* border-bottom: 1px solid black; */
 
   .container {
-    background-color: #cccccc;
+    background-color: #ebebeb;
     padding: 5px;
     border: 1px solid black;
     border-radius: 5px;
     margin: 10px;
   }
 
-  .row:nth-child(odd) {
-    background-color: #afafaf;
+  .row {
+    transition: 0.5s;
   }
-  .row:nth-child(even) {
-    background-color: #919191;
+
+  .row:hover {
+    --row-border-rad-px : 5px;
+    --row-border-px : 1px;
+    padding: 5px;
+    height: 40px;
+    background-color: white;
+    color: black;
+    border-bottom: var(--row-border-px) solid #161616;
+    border-left: var(--row-border-px) solid #161616;
+    border-right: var(--row-border-px) solid #161616;
+    border-top-left-radius: var(--row-border-rad-px);
+    border-bottom-left-radius: var(--row-border-rad-px);
+    border-top-right-radius: var(--row-border-rad-px);
+    border-bottom-right-radius: var(--row-border-rad-px);
   }
 
   .noupdates {
@@ -46,7 +60,7 @@ const UpdatesRow = styled.div`
   align-items: center;
 
   div {
-    padding: 5px;
+    padding: 4px;
   }
 
   div:nth-child(1) {
@@ -67,7 +81,7 @@ const UpdatesRow = styled.div`
 
 const UpdatesHeader = styled.div`
   display: flex;
-  background-color: black;
+  background-color: #161616;
   color: white;
   padding: 5px;
   align-items: center;
@@ -181,7 +195,7 @@ const TableRowUpdates = ({ task }) => {
 
             { updates.map((update) => (
 
-              <UpdatesRow className="row" key={ update.id }>
+              <UpdatesRow className="row-u row" key={ update.id }>
 
                 <CellDescription
                   task={ { taskObj: task, updateObj: update } }

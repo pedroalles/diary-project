@@ -45,10 +45,10 @@ const TableBody = styled.div`
   flex-direction: column;
 
   .row:nth-child(odd) {
-    background-color: #e9e9e9;
+    background-color: #d1d1d1;
   }
   .row:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #bbbbbb;
   }
 
   .row:hover {
