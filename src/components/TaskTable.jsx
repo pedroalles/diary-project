@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTask, toggleEditTask, updateTask, toggleUpdateTask } from '../redux/actions';
+import {
+  toggleUpdateTask,
+} from '../redux/actions';
 
-import TableRowCellTitle from './TableRowCellTitle';
-import TableRowCellDescription from './TableRowCellDescription';
+import CellTitle from './CellTitle';
+import CellDescription from './CellDescription';
 import TableRowCellActions from './TableRowCellActions';
 import TableRowUpdates from './TableRowUpdates';
 
@@ -110,7 +112,7 @@ export const Button = styled.button`
 `;
 
 const TaskTable = () => {
-  const [editing, setEditing] = useState({ id: '', title: '', description: '' });
+
   let tasks = useSelector(state => state.tasksReducer.tasks);
 
   const filter = useSelector(state => state.tasksReducer.filter.task);
@@ -124,21 +126,6 @@ const TaskTable = () => {
         description.toLowerCase().includes(lowFilter) ||
         createdAt.toLowerCase().includes(lowFilter));
   }
-
-  const handleEdit = (task) => {
-    setEditing({ id: task.id, title: task.title, description: task.description });
-    dispatch(toggleEditTask(task.id));
-  };
-
-  const handleSave = (task) => {
-    dispatch(toggleEditTask(task.id));
-    dispatch(updateTask(editing));
-    setEditing({ id: '', title: '', description: '' });
-  };
-
-  const handleChange = ({ target: { id, value } }) => {
-    setEditing({ ...editing, [id]: value });
-  };
 
   return (
 
@@ -160,19 +147,13 @@ const TaskTable = () => {
           <TableRow className="row" key={ index }>
 
             <TableRowContent className="content">
-              <TableRowCellTitle
-                // title
-                onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
-                editing={ editing }
+              <CellTitle
                 task={ task }
-                handleChange={ handleChange }
+                mode="task"
               />
-              <TableRowCellDescription
-                // description
-                onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
-                editing={ editing }
+              <CellDescription
                 task={ task }
-                handleChange={ handleChange }
+                mode="task"
               />
               <TableRowCell
                 center
@@ -188,9 +169,7 @@ const TaskTable = () => {
               </TableRowCell>
               <TableRowCellActions
                 task={ task }
-                save={ () => handleSave(task) }
-                edit={ () => handleEdit(task) }
-                del={ () => dispatch(deleteTask(task.id)) }
+                mode="task"
               />
             </TableRowContent>
 

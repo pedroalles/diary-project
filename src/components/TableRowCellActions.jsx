@@ -1,27 +1,76 @@
 import React from 'react';
 
-import { TableRowCell, Button } from './TaskTable';
+import { TableRowCell } from './TaskTable';
 
-const TableRowCellActions = ({ task, save, edit, del }) => {
-  return (
-    <TableRowCell
-      center
-      actions
-    >
-      { task.isEditing ?
-        <Button save onClick={ save }>
-          <i className="fas fa-save fa-2x"></i>
-        </Button>
-        :
-        <Button edit onClick={ edit }>
-          <i className="fas fa-pencil-alt fa-2x"></i>
-        </Button>
-      }
-      <Button delete onClick={ del }>
-        <i className="fas fa-trash fa-2x"></i>
-      </Button>
-    </TableRowCell >
-  );
+import SaveButton from './SaveButton';
+import EditButton from './EditButton';
+import DeleteButton from './DeleteButton';
+
+const TableRowCellActions = ({ task, mode }) => {
+
+  if (mode === 'task') {
+    return (
+      <TableRowCell
+        center
+        actions
+      >
+        { task.isEditing ?
+
+          <SaveButton
+            task={ task }
+            mode="task"
+          />
+
+          :
+
+          <EditButton
+            task={ task }
+            mode="task"
+          />
+        }
+
+        <DeleteButton
+          task={ task }
+          mode="task"
+        />
+
+      </TableRowCell >
+
+    );
+  }
+
+  if (mode === "update") {
+    const { updateObj } = task;
+    return (
+      <TableRowCell
+        center
+        actions
+      >
+        { updateObj.isEditing ?
+
+          <SaveButton
+            task={ task }
+            mode="update"
+          />
+
+          :
+
+          <EditButton
+            task={ task }
+            mode="update"
+          />
+        }
+
+        <DeleteButton
+          task={ task }
+          mode="update"
+        />
+
+      </TableRowCell >
+
+    );
+  }
+
 };
 
 export default TableRowCellActions;

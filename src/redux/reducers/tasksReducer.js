@@ -1,10 +1,22 @@
 import {
   ADD_TASK,
   DELETE_TASK,
+
   TOGGLE_EDIT_TASK,
-  UPDATE_TASK,
+  EDIT_TASK,
+
+  EDIT_UPDATE,
+
+
+  TOGGLE_EDIT_UPDATE,
+
+  EDIT_DESCRIPTION,
+  EDIT_TITLE,
+
   SET_FILTER,
   TOGGLE_UPDATES_TASK,
+
+
   ADD_UPDATE,
   DELETE_UPDATE,
 } from '../actions';
@@ -17,12 +29,42 @@ import { generateDate } from '../../helpers/dateGenerator';
 
 const INITIAL_STATE = {
   tasks: [],
-  filter: { task: '', update: '' },
+  filter: {
+    task: '',
+    update: ''
+  },
+  edit: {
+    task: { title: '', description: '' },
+    update: { description: '' },
+  }
 };
 
 const tasksReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
+    case EDIT_DESCRIPTION:
+      return {
+        ...state,
+        edit: {
+          ...state.edit,
+          [action.payload.mode]: {
+            ...state.edit[action.payload.mode],
+            description: action.payload.description,
+          }
+        }
+      };
+
+    case EDIT_TITLE:
+      return {
+        ...state,
+        edit: {
+          ...state.edit,
+          [action.payload.mode]: {
+            ...state.edit[action.payload.mode],
+            title: action.payload.title,
+          }
+        }
+      };
 
     case ADD_TASK:
       const { title, description } = action.payload;
@@ -56,7 +98,31 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
             { ...task, isEditing: !task.isEditing } : { ...task, isEditing: false })
       };
 
-    case UPDATE_TASK:
+    case TOGGLE_EDIT_UPDATE:
+      return {
+        ...state,
+        tasks: state.tasks.map(task => task.id === action.payload.idTask ? {
+          ...task,
+          updates: task.updates.map((update) => update.id === action.payload.idUpdate ? {
+            ...update,
+            isEditing: !update.isEditing,
+          } :
+            { ...update, isEditing: false })
+        } :
+          { ...task })
+      };
+
+    case DELETE_UPDATE:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => task.id === action.payload.idTask ? {
+          ...task,
+          updates: task.updates.filter((update) => update.id !== action.payload.idUpdate)
+        } : { ...task })
+      };
+
+    case EDIT_TASK:
+
       return {
         ...state,
         tasks: state.tasks.map(task => task.id === action.payload.id ?
@@ -67,6 +133,22 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
           } : { ...task }
         )
       };
+
+    case EDIT_UPDATE:
+      return {
+        ...state,
+        tasks: state.tasks.map(task => task.id === action.payload.idTask ? {
+          ...task,
+          updates: task.updates.map((update) => update.id === action.payload.idUpdate ? {
+            ...update,
+            description: action.payload.update,
+          } :
+            { ...update })
+        } :
+          { ...task })
+      };
+
+
 
     case TOGGLE_UPDATES_TASK:
       return {
@@ -85,21 +167,14 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
           task.id === action.payload.id ?
             {
               ...task,
-              updates: [...task.updates, {
+              updates: [...task.updates,
+              {
                 id: generateID(),
                 description: action.payload.description,
-                createdAt: generateDate()
+                createdAt: generateDate(),
+                isEditing: false,
               }]
             } : { ...task })
-      };
-
-    case DELETE_UPDATE:
-      return {
-        ...state,
-        tasks: state.tasks.map((task) => task.id === action.payload.idTask ? {
-          ...task,
-          updates: task.updates.filter((update) => update.id !== action.payload.idUpdate)
-        } : { ...task })
       };
 
     case SET_FILTER:

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addUpdate, deleteUpdate } from '../redux/actions';
+import { addUpdate } from '../redux/actions';
 
 import { SearchBar } from '.';
 
 import styled from 'styled-components';
+
+import TableRowCellActions from './TableRowCellActions';
+import CellDescription from './CellDescription';
 
 const TableUpdates = styled.div`
   font-size: 1.2rem;
@@ -39,7 +42,7 @@ const TableUpdates = styled.div`
 
 const UpdatesRow = styled.div`
   display: flex;
-  height: 30px;
+  height: 35px;
   align-items: center;
 
   div {
@@ -56,7 +59,10 @@ const UpdatesRow = styled.div`
   div:nth-child(3) {
     text-align: center;
     width: 15%;
+    display: flex;
+    justify-content: space-evenly;
   }
+
 `;
 
 const UpdatesHeader = styled.div`
@@ -174,20 +180,21 @@ const TableRowUpdates = ({ task }) => {
             { updates.map((update) => (
 
               <UpdatesRow className="row" key={ update.id }>
-                <div>
-                  { update.description }
-                </div>
+
+                <CellDescription
+                  task={ { taskObj: task, updateObj: update } }
+                  mode="update"
+                />
+
                 <div>
                   { update.createdAt }
                 </div>
-                <div>
-                  <Button
-                    del
-                    onClick={ () => dispatch(deleteUpdate({ idTask: task.id, idUpdate: update.id })) }
-                  >
-                    <i className="fas fa-trash fa-lg"></i>
-                  </Button>
-                </div>
+
+                <TableRowCellActions
+                  // task={ { idTask: task.id, idUpdate: update.id } }
+                  task={ { taskObj: task, updateObj: update } }
+                  mode="update"
+                />
               </UpdatesRow>
 
             )) }
