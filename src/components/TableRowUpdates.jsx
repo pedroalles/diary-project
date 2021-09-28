@@ -12,7 +12,7 @@ import CellDescription from './CellDescription';
 
 const TableUpdates = styled.div`
   font-size: 1.2rem;
-  width: 65%;
+  width: 70%;
   margin: auto;
 
   .container {
@@ -69,6 +69,8 @@ const UpdatesHeader = styled.div`
   display: flex;
   background-color: black;
   color: white;
+  padding: 5px;
+  align-items: center;
   div:nth-child(1) {
     text-align: center;
     width: 50%;
@@ -153,7 +155,7 @@ const TableRowUpdates = ({ task }) => {
             <Button
               type="submit"
             >
-              <i className="fas fa-plus-circle fa-lg"></i>
+              <i className="fas fa-plus-circle fa-2x"></i>
             </Button>
           </form>
 
