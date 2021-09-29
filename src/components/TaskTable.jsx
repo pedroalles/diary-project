@@ -5,6 +5,10 @@ import {
   toggleUpdateTask,
 } from '../redux/actions';
 
+import { setSortColumn } from '../helpers/setSort';
+
+import { sortColumn } from '../helpers/sortColumn';
+
 import CellTitle from './CellTitle';
 import CellDescription from './CellDescription';
 import TableRowCellActions from './TableRowCellActions';
@@ -129,10 +133,12 @@ export const Button = styled.button`
 `;
 
 const TaskTable = () => {
-
   let tasks = useSelector(state => state.tasksReducer.tasks);
 
   const filter = useSelector(state => state.tasksReducer.filter.task);
+
+  const sortCol = useSelector(state => state.tasksReducer.sort.task);
+
   const dispatch = useDispatch();
 
   if (filter) {
@@ -144,16 +150,34 @@ const TaskTable = () => {
         createdAt.toLowerCase().includes(lowFilter));
   }
 
+  tasks = sortColumn(sortCol, tasks);
+
+
   return (
 
     <Table>
       { !tasks.length ?
         <p>No tasks</p> :
         <TableHeader>
-          <TableHeaderCell title>Title</TableHeaderCell>
-          <TableHeaderCell description>Description</TableHeaderCell>
-          <TableHeaderCell>Created At</TableHeaderCell>
-          <TableHeaderCell>Updated At</TableHeaderCell>
+
+          <TableHeaderCell
+            title
+            onClick={ () => setSortColumn('title', 'task', dispatch, sortCol) }
+          >Title</TableHeaderCell>
+
+          <TableHeaderCell
+            description
+            onClick={ () => setSortColumn('description', 'task', dispatch, sortCol) }
+          >Description</TableHeaderCell>
+
+          <TableHeaderCell
+            onClick={ () => setSortColumn('createdAt', 'task', dispatch, sortCol) }
+          >Created At</TableHeaderCell>
+
+          <TableHeaderCell
+            onClick={ () => setSortColumn('updates', 'task', dispatch, sortCol) }
+          >Updated At</TableHeaderCell>
+
           <TableHeaderCell actions>Actions</TableHeaderCell>
         </TableHeader>
       }

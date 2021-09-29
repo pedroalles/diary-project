@@ -13,7 +13,18 @@ import { loadFromLocalStorage, saveToLocalStorage } from '../../helpers/localSto
 const store = createStore(rootReducer, loadFromLocalStorage(), composeWithDevTools());
 
 store.subscribe(() => saveToLocalStorage(
-  { tasksReducer: { ...store.getState().tasksReducer, filter: { task: '', update: '' } } }
+  {
+    tasksReducer: {
+      ...store.getState().tasksReducer,
+      filter: {
+        task: '', update: ''
+      },
+      sort: {
+        task: { by: 'createdAt', cres: true },
+        update: { by: 'createdAt', cres: true }
+      },
+    }
+  }
 ));
 
 export default store;

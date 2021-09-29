@@ -12,11 +12,13 @@ import {
   EDIT_DESCRIPTION,
   EDIT_TITLE,
 
-  SET_FILTER,
   TOGGLE_UPDATES_TASK,
 
   ADD_UPDATE,
   DELETE_UPDATE,
+
+  SET_FILTER,
+  SET_SORT,
 } from '../actions';
 
 import { generateID } from '../../helpers/idGenerator';
@@ -31,6 +33,10 @@ const INITIAL_STATE = {
     task: '',
     update: ''
   },
+  sort: {
+    task: { by: 'createdAt', cres: true },
+    update: { by: 'createdAt', cres: true }
+  },
   edit: {
     task: { title: '', description: '' },
     update: { description: '' },
@@ -40,6 +46,17 @@ const INITIAL_STATE = {
 const tasksReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
+
+    case SET_SORT:
+      return {
+        ...state,
+        sort: {
+          ...state.sort,
+          [action.payload.mode]: {
+            ...action.payload.sort,
+          },
+        }
+      };
 
     case EDIT_DESCRIPTION:
       return {

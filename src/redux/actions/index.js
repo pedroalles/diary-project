@@ -18,6 +18,7 @@ export const ADD_UPDATE = 'ADD_UPDATE';
 export const DELETE_UPDATE = 'DELETE_UPDATE';
 
 export const SET_FILTER = 'SET_FILTER';
+export const SET_SORT = 'SET_SORT';
 
 
 export const editTitle = ({ mode, title }) => ({
@@ -78,4 +79,9 @@ export const deleteUpdate = ({ idTask, idUpdate }) => ({
 export const setFilter = ({ mode, filter }) => ({
   type: SET_FILTER,
   payload: { mode, filter },
+});
+
+export const setSort = ({ mode, sort }) => ({
+  type: SET_SORT,
+  payload: { mode, sort },
 });
