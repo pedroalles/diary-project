@@ -66,7 +66,7 @@ const TableBody = styled.div`
   }
 
   .content:hover {
-    height: 50px;
+    height: 45px;
   }
 
 `;
@@ -106,9 +106,17 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  border: none;
   background: none;
-  color: ${props => props.save ? "#128826" : props.edit ? "#d14d00" : "#be4040"};
+  border: none;
+  color: ${props => {
+    if (props.save) return "#108a00c3";
+    if (props.edit) return "#ff7b00ae";
+    if (props.del) return "#ff0000a0";
+    if (props.add) return "#6565d6";
+  }};
+  height: 25px;
+  width: 25px;
+  vertical-align: middle;
 `;
 
 const TaskTable = () => {

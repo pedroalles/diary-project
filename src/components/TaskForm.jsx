@@ -6,21 +6,14 @@ import styled from 'styled-components';
 
 import { addTask } from '../redux/actions';
 
+import { Button } from './TaskTable';
+
 const Form = styled.form`
-  input, button {
+  input {
     font-size: 1.2rem;
-    margin-left: 2px;
+    margin-right: 4px;
     padding: 4px;
   }
-`;
-
-const Button = styled.button`
-  width: 30px;
-  height: 30px;
-  border: none;
-  background: none;
-  vertical-align: middle;
-  color: #6565d6;
 `;
 
 const TaskForm = () => {
@@ -56,8 +49,8 @@ const TaskForm = () => {
         onChange={ handleChange }
         required
       />
-      <Button type="submit">
-        <i className="fas fa-plus-circle fa-lg"></i>
+      <Button add type="submit">
+        <i className="fas fa-plus-circle fa-2x"></i>
       </Button>
     </Form>
   );
