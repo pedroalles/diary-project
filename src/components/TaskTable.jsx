@@ -66,7 +66,10 @@ const TableBody = styled.div`
   }
 
   .content:hover {
-    height: 45px;
+    div:nth-child(1),
+    div:nth-child(2) {
+      padding: 10px;
+    }
   }
 
 `;
@@ -95,7 +98,13 @@ export const TableRowCell = styled.div`
   padding: 5px;
   vertical-align: middle;
   text-align: ${props => props.center ? "center" : "justify"};
-  width: ${props => props.title ? "20%" : props.description ? "30%" : props.actions ? "10%" : "20%"};
+  width: ${props => {
+    if (props.title) return "20%";
+    if (props.description) return "30%";
+    if (props.actions) return "10%";
+    return "20%";
+  }};
+
 `;
 
 export const Input = styled.input`

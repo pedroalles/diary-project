@@ -30,10 +30,15 @@ const TableUpdates = styled.div`
   .row:hover {
     --row-border-rad-px : 5px;
     --row-border-px : 1px;
-    padding: 5px;
+
+    div:nth-child(1) {
+    padding: 10px;
+    }
+
     height: 40px;
     background-color: white;
     color: black;
+    
     border-bottom: var(--row-border-px) solid #161616;
     border-left: var(--row-border-px) solid #161616;
     border-right: var(--row-border-px) solid #161616;
@@ -183,19 +188,20 @@ const TableRowUpdates = ({ task }) => {
               <div>Actions</div>
             </UpdatesHeader>
 
-            { updates.map((update) => (
+            <div >
+              { updates.map((update) => (
 
-              <UpdatesRow className="row-u row" key={ update.id }>
+                <UpdatesRow className="row-u row" key={ update.id }>
 
-                <CellDescription task={ { taskObj: task, updateObj: update } } mode="update" />
+                  <CellDescription task={ { taskObj: task, updateObj: update } } mode="update" />
 
-                <div>{ update.createdAt }</div>
+                  <div>{ update.createdAt }</div>
 
-                <TableRowCellActions task={ { taskObj: task, updateObj: update } } mode="update" />
+                  <TableRowCellActions task={ { taskObj: task, updateObj: update } } mode="update" />
 
-              </UpdatesRow>
-
-            )) }
+                </UpdatesRow>
+              )) }
+            </div>
           </div>
         }
       </div>
