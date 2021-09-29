@@ -14,7 +14,6 @@ const TableUpdates = styled.div`
   font-size: 1.2rem;
   width: 100%;
   margin: auto;
-  /* border-bottom: 1px solid black; */
 
   .container {
     background-color: #ebebeb;
@@ -141,7 +140,6 @@ const TableRowUpdates = ({ task }) => {
         createdAt.toLowerCase().includes(lowFilter));
   }
 
-
   const handleChange = ({ target: { name, value } }) => {
     setNewUpdate({ id: task.id, [name]: value });
   };
@@ -166,9 +164,7 @@ const TableRowUpdates = ({ task }) => {
               onChange={ handleChange }
               placeholder="Update Description"
             />
-            <Button
-              type="submit"
-            >
+            <Button type="submit">
               <i className="fas fa-plus-circle fa-2x"></i>
             </Button>
           </form>
@@ -182,35 +178,21 @@ const TableRowUpdates = ({ task }) => {
           <div >
 
             <UpdatesHeader>
-              <div>
-                Description
-              </div>
-              <div>
-                Created At
-              </div>
-              <div>
-                Actions
-              </div>
+              <div>Description</div>
+              <div>Created At</div>
+              <div>Actions</div>
             </UpdatesHeader>
 
             { updates.map((update) => (
 
               <UpdatesRow className="row-u row" key={ update.id }>
 
-                <CellDescription
-                  task={ { taskObj: task, updateObj: update } }
-                  mode="update"
-                />
+                <CellDescription task={ { taskObj: task, updateObj: update } } mode="update" />
 
-                <div>
-                  { update.createdAt }
-                </div>
+                <div>{ update.createdAt }</div>
 
-                <TableRowCellActions
-                  // task={ { idTask: task.id, idUpdate: update.id } }
-                  task={ { taskObj: task, updateObj: update } }
-                  mode="update"
-                />
+                <TableRowCellActions task={ { taskObj: task, updateObj: update } } mode="update" />
+
               </UpdatesRow>
 
             )) }

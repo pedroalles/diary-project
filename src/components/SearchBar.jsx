@@ -14,11 +14,11 @@ const InputSearch = styled.input`
 `;
 
 const SearchBar = ({ mode }) => {
+
   const dispatch = useDispatch();
   const filter = useSelector(state => state.tasksReducer.filter);
-  const handleChange = ({ target: { value } }) => {
-    dispatch(setFilter({ mode: mode, filter: value }));
-  };
+
+  const handleChange = ({ target: { value } }) => dispatch(setFilter({ mode: mode, filter: value }));
 
   return (
     <InputSearch

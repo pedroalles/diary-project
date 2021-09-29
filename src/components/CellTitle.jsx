@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -15,9 +14,7 @@ const CellTitle = ({ mode, task }) => {
 
   const dispatch = useDispatch();
 
-  const handleChange = ({ target: { value } }) => {
-    dispatch(editTitle({ mode: mode, title: value }));
-  };
+  const handleChange = ({ target: { value } }) => dispatch(editTitle({ mode: mode, title: value }));
 
   return (
     <TableRowCell

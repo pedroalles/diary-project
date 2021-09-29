@@ -1,3 +1,1 @@
-export const generateDate = () => {
-  return new Date().toLocaleString("pt-BR", { timeZone: 'America/Sao_Paulo' });
-};
+export const generateDate = () => new Date().toLocaleString("pt-BR", { timeZone: 'America/Sao_Paulo' });

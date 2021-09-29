@@ -147,30 +147,29 @@ const TaskTable = () => {
           <TableRow className="row" key={ index }>
 
             <TableRowContent className="content">
-              <CellTitle
-                task={ task }
-                mode="task"
-              />
-              <CellDescription
-                task={ task }
-                mode="task"
-              />
+
+              <CellTitle task={ task } mode="task" />
+              <CellDescription task={ task } mode="task" />
+
               <TableRowCell
                 center
                 onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
               >
                 { task.createdAt }
               </TableRowCell>
+
               <TableRowCell
                 center
                 onClick={ task.isEditing ? null : () => dispatch(toggleUpdateTask(task.id)) }
               >
-                { !task.updates.length ? 'No updates' : task.updates[task.updates.length - 1].createdAt }
+                { !task.updates.length ?
+                  'No updates' :
+                  task.updates[task.updates.length - 1].createdAt
+                }
               </TableRowCell>
-              <TableRowCellActions
-                task={ task }
-                mode="task"
-              />
+
+              <TableRowCellActions task={ task } mode="task" />
+
             </TableRowContent>
 
             <TableRowUpdates task={ task } />

@@ -10,29 +10,15 @@ const TableRowCellActions = ({ task, mode }) => {
 
   if (mode === 'task') {
     return (
-      <TableRowCell
-        center
-        actions
-      >
+
+      <TableRowCell center actions>
         { task.isEditing ?
 
-          <SaveButton
-            task={ task }
-            mode="task"
-          />
-
+          <SaveButton task={ task } mode="task" />
           :
-
-          <EditButton
-            task={ task }
-            mode="task"
-          />
+          <EditButton task={ task } mode="task" />
         }
-
-        <DeleteButton
-          task={ task }
-          mode="task"
-        />
+        <DeleteButton task={ task } mode="task" />
 
       </TableRowCell >
 
@@ -42,35 +28,22 @@ const TableRowCellActions = ({ task, mode }) => {
   if (mode === "update") {
     const { updateObj } = task;
     return (
-      <TableRowCell
-        center
-        actions
-      >
+
+      <TableRowCell center actions>
+
         { updateObj.isEditing ?
 
-          <SaveButton
-            task={ task }
-            mode="update"
-          />
-
+          <SaveButton task={ task } mode="update" />
           :
-
-          <EditButton
-            task={ task }
-            mode="update"
-          />
+          <EditButton task={ task } mode="update" />
         }
 
-        <DeleteButton
-          task={ task }
-          mode="update"
-        />
+        <DeleteButton task={ task } mode="update" />
 
       </TableRowCell >
 
     );
   }
-
 };
 
 export default TableRowCellActions;

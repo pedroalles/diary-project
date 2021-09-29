@@ -7,7 +7,6 @@ import {
 
   EDIT_UPDATE,
 
-
   TOGGLE_EDIT_UPDATE,
 
   EDIT_DESCRIPTION,
@@ -15,7 +14,6 @@ import {
 
   SET_FILTER,
   TOGGLE_UPDATES_TASK,
-
 
   ADD_UPDATE,
   DELETE_UPDATE,
@@ -42,6 +40,7 @@ const INITIAL_STATE = {
 const tasksReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
+
     case EDIT_DESCRIPTION:
       return {
         ...state,
@@ -122,7 +121,6 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
       };
 
     case EDIT_TASK:
-
       return {
         ...state,
         tasks: state.tasks.map(task => task.id === action.payload.id ?
@@ -148,8 +146,6 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
           { ...task })
       };
 
-
-
     case TOGGLE_UPDATES_TASK:
       return {
         ...state,
@@ -160,7 +156,6 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
       };
 
     case ADD_UPDATE:
-      console.log(action.payload);
       return {
         ...state,
         tasks: state.tasks.map(task =>

@@ -22,9 +22,7 @@ const SaveButton = ({ mode, task }) => {
 
   const handleClick = () => {
 
-
     if (mode === 'task') {
-      console.log('entrou em save task', edit);
       dispatch(toggleEditTask(task.id));
       dispatch(editTask({ id: task.id, ...edit }));
       dispatch(editTitle({ mode: mode, title: '' }));
@@ -33,27 +31,14 @@ const SaveButton = ({ mode, task }) => {
 
     if (mode === 'update') {
       const { taskObj, updateObj } = task;
-      console.log('entrou em save update', edit);
-
       dispatch(toggleEditUpdate({ idTask: taskObj.id, idUpdate: updateObj.id }));
-
-      //f
-      dispatch(editUpdate({
-        idTask: taskObj.id,
-        idUpdate: updateObj.id,
-        update: edit.description,
-      }));
-
-
+      dispatch(editUpdate({ idTask: taskObj.id, idUpdate: updateObj.id, update: edit.description }));
       dispatch(editDescription({ mode: mode, description: '' }));
     }
   };
 
   return (
-    <Button
-      save
-      onClick={ handleClick }
-    >
+    <Button save onClick={ handleClick }>
       <i className="fas fa-save fa-2x"></i>
     </Button>
   );
