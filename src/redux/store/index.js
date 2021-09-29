@@ -19,10 +19,10 @@ store.subscribe(() => saveToLocalStorage(
       filter: {
         task: '', update: ''
       },
-      sort: {
-        task: { by: 'createdAt', cres: true },
-        update: { by: 'createdAt', cres: true }
-      },
+      // sort: {
+      //   task: { by: 'createdAt', cres: true },
+      //   update: { by: 'createdAt', cres: true }
+      // },
     }
   }
 ));
