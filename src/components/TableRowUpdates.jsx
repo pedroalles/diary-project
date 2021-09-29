@@ -10,6 +10,9 @@ import styled from 'styled-components';
 import TableRowCellActions from './TableRowCellActions';
 import CellDescription from './CellDescription';
 
+import { setSortColumn } from '../helpers/setSort';
+import { sortColumn } from '../helpers/sortColumn';
+
 const TableUpdates = styled.div`
   font-size: 1.2rem;
   width: 100%;
@@ -130,9 +133,11 @@ const Header = styled.header`
 
 const TableRowUpdates = ({ task }) => {
 
+
   const dispatch = useDispatch();
   const [newUpdate, setNewUpdate] = useState({ id: '', description: '' });
 
+  const sortCol = useSelector(state => state.tasksReducer.sort.update);
   const filter = useSelector(state => state.tasksReducer.filter.update);
 
   let updates = task.updates;
@@ -144,6 +149,8 @@ const TableRowUpdates = ({ task }) => {
         description.toLowerCase().includes(lowFilter) ||
         createdAt.toLowerCase().includes(lowFilter));
   }
+
+  updates = sortColumn(sortCol, updates);
 
   const handleChange = ({ target: { name, value } }) => {
     setNewUpdate({ id: task.id, [name]: value });
@@ -183,8 +190,8 @@ const TableRowUpdates = ({ task }) => {
           <div >
 
             <UpdatesHeader>
-              <div>Description</div>
-              <div>Created At</div>
+              <div onClick={ () => setSortColumn('description', 'update', dispatch, sortCol) }>Description</div>
+              <div onClick={ () => setSortColumn('createdAt', 'update', dispatch, sortCol) }>Created At</div>
               <div>Actions</div>
             </UpdatesHeader>
 
