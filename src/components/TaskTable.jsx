@@ -35,6 +35,12 @@ const TableHeader = styled.div`
   display: flex;
   background-color: #161616 ;
   color: white;
+  div:nth-child(1),
+  div:nth-child(2),
+  div:nth-child(3),
+  div:nth-child(4) {
+    cursor: pointer;
+  }
 `;
 
 const TableHeaderCell = styled.div`
@@ -67,6 +73,10 @@ const TableBody = styled.div`
     border-bottom-left-radius: var(--row-border-rad-px);
     border-top-right-radius: var(--row-border-rad-px);
     border-bottom-right-radius: var(--row-border-rad-px);
+  }
+
+  .row-content {
+    cursor: pointer;
   }
 
   .content:hover {
@@ -127,6 +137,7 @@ export const Button = styled.button`
     if (props.del) return "#ff0000a0";
     if (props.add) return "#6565d6";
   }};
+  cursor: pointer;
   height: 25px;
   width: 25px;
   vertical-align: middle;
@@ -187,7 +198,7 @@ const TaskTable = () => {
         { tasks.map((task, index) => (
           <TableRow className="row" key={ index }>
 
-            <TableRowContent className="content">
+            <TableRowContent className="row-content">
 
               <CellTitle task={ task } mode="task" />
               <CellDescription task={ task } mode="task" />

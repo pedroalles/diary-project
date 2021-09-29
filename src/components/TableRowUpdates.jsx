@@ -13,6 +13,8 @@ import CellDescription from './CellDescription';
 import { setSortColumn } from '../helpers/setSort';
 import { sortColumn } from '../helpers/sortColumn';
 
+import { Button } from './TaskTable';
+
 const TableUpdates = styled.div`
   font-size: 1.2rem;
   width: 100%;
@@ -107,12 +109,12 @@ const UpdatesHeader = styled.div`
   }
 `;
 
-const Button = styled.button`
-  border: none;
-  background: none;
-  vertical-align: middle;
-  color: ${props => props.del ? "#be4040" : "#6565d6"};
-`;
+// const Button = styled.button`
+//   border: none;
+//   background: none;
+//   vertical-align: middle;
+//   color: ${props => props.del ? "#be4040" : "#6565d6"};
+// `;
 
 const Header = styled.header`
   display: flex;
@@ -176,7 +178,7 @@ const TableRowUpdates = ({ task }) => {
               onChange={ handleChange }
               placeholder="Update Description"
             />
-            <Button type="submit">
+            <Button add type="submit">
               <i className="fas fa-plus-circle fa-2x"></i>
             </Button>
           </form>
@@ -190,15 +192,23 @@ const TableRowUpdates = ({ task }) => {
           <div >
 
             <UpdatesHeader>
-              <div onClick={ () => setSortColumn('description', 'update', dispatch, sortCol) }>Description</div>
-              <div onClick={ () => setSortColumn('createdAt', 'update', dispatch, sortCol) }>Created At</div>
+              <div 
+              onClick={ () => setSortColumn('description', 'update', dispatch, sortCol) }
+              className="row-content"
+              >
+              Description</div>
+              <div 
+              onClick={ () => setSortColumn('createdAt', 'update', dispatch, sortCol) }
+              className="row-content"
+              >
+              Created At</div>
               <div>Actions</div>
             </UpdatesHeader>
 
             <div >
               { updates.map((update) => (
 
-                <UpdatesRow className="row-u row" key={ update.id }>
+                <UpdatesRow className="row" key={ update.id }>
 
                   <CellDescription task={ { taskObj: task, updateObj: update } } mode="update" />
 
